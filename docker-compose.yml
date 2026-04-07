@@ -1,0 +1,27 @@
+services:
+  api:
+    build: ./api-service
+    container_name: infra-api
+    networks:
+      - infra-net
+    healthcheck:
+      test: ["CMD", "node", "-e", "process.exit(0)"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  web:
+    build: ./web-service
+    container_name: infra-web
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - infra-net
+
+# --- C'EST CETTE PARTIE QU'IL MANQUE OU QUI EST MAL ALIGNÉE ---
+networks:
+  infra-net:
+    driver: bridge
