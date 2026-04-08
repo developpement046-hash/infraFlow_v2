@@ -98,15 +98,16 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          # Ici on utilise tes vrais noms de secrets GitHub
+          username: ${{ secrets.DOCKERHUB_USERNAME }} 
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push api-service
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/infraflow-api:sha-${{ github.sha }} ./api-service
-          docker push ${{ secrets.DOCKER_USERNAME }}/infraflow-api:sha-${{ github.sha }}
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/infraflow-api:latest ./api-service
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/infraflow-api:latest
 
       - name: Build and push web-service
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/infraflow-web:sha-${{ github.sha }} ./web-service
-          docker push ${{ secrets.DOCKER_USERNAME }}/infraflow-web:sha-${{ github.sha }}
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/infraflow-web:latest ./web-service
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/infraflow-web:latest
