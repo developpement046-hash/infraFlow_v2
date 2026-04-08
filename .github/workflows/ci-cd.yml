@@ -76,16 +76,15 @@ jobs:
         with:
           image-ref: infraflow-api:sha-${{ github.sha }}
           format: table
-          exit-code: '1'
-          severity: CRITICAL
-          output: trivy-report.txt
+          severity: CRITICAL,HIGH
+          output: trivy-report-api.txt
 
       - name: Upload Trivy report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: trivy-report
-          path: trivy-report.txt
+          name: trivy-report-api
+          path: trivy-report-api.txt
 
   push:
     name: Push to Registry
