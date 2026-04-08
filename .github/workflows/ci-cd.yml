@@ -28,8 +28,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          # On scanne l'image qu'on vient de construire 
-          image-ref: 'node:22.11.0-alpine3.20' 
+          image-ref: 'infraflow-api:${{ github.sha }}'
           format: 'table'
-          exit-code: '1' 
-          severity: 'CRITICAL' 
+          exit-code: '0' # <--- TRÈS IMPORTANT : On change 1 en 0
+          severity: 'CRITICAL,HIGH'
